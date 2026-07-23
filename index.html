@@ -582,12 +582,60 @@
             page-break-before: always;
         }
 
+        /* Table wrapper for horizontal scroll on small screens */
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-hint {
+            display: none;
+            font-size: 9pt;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
         @media (max-width: 720px) {
             .packages { flex-direction: column; }
             .struct-grid { grid-template-columns: repeat(2, 1fr); }
             .contact-grid { grid-template-columns: repeat(2, 1fr); }
             .meta { flex-direction: column; gap: 6px; }
-            .container { padding: 25px 18px; }
+            .container { padding: 25px 16px; }
+
+            /* Cho phép mọi bảng cuộn ngang thay vì tràn lề */
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+                font-size: 9pt;
+            }
+
+            th, td {
+                padding: 9px 10px;
+            }
+
+            /* Bảng so sánh: giữ cột đầu đủ rộng */
+            .comparison th:first-child { width: auto; min-width: 150px; }
+
+            /* Flow box (ASCII) cuộn ngang, không tràn */
+            .flow-box {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                font-size: 8pt;
+            }
+
+            .doc-title { font-size: 17pt; }
+            .package-price { font-size: 18pt; }
+            .scroll-hint { display: block; }
+        }
+
+        @media (max-width: 420px) {
+            table { font-size: 8.5pt; }
+            th, td { padding: 8px 8px; }
         }
     </style>
 </head>
@@ -635,7 +683,8 @@
                     lý</strong> (do phiếu khảo sát chi tiết chưa hoàn tất). Chúng tôi sẽ chốt lại chính xác sau buổi trao
                 đổi:</p>
             <ul>
-                <li>Website dạng <strong>landing page/one-page</strong> quảng bá tổng thể phòng khám (không phải sàn TMĐT).</li>
+                <li>Website dạng <strong>đa trang</strong> quảng bá tổng thể phòng khám (không phải sàn TMĐT).</li>
+                <li>Cần <strong>backend + CMS</strong> để quản lý nội dung và lưu data khách điền form → chọn <strong>Gói B</strong> (đề xuất) hoặc <strong>Gói C</strong> (cao cấp, giống Akina). Gói A là web tĩnh, phù hợp ngân sách thấp.</li>
                 <li><strong>Không tích hợp hệ thống đặt lịch hẹn</strong> — chỉ dùng form liên hệ + nút liên hệ nhanh (theo xác nhận của Anh/Chị).</li>
                 <li>Anh/Chị <strong>tự cung cấp nội dung</strong>: logo, hình ảnh, video, thông tin dịch vụ & bác sĩ.</li>
                 <li>Anh/Chị <strong>đã có sẵn Domain + Hosting</strong> → chi phí duy trì hằng năm do Anh/Chị thanh toán trực tiếp với nhà cung cấp.</li>
@@ -651,36 +700,39 @@
             <!-- Package A -->
             <div class="package">
                 <div class="package-name">🌸 GÓI A<br>TIÊU CHUẨN</div>
-                <div class="package-price">12 Triệu</div>
-                <div class="package-desc">Landing page đẹp, đầy đủ tính năng cơ bản</div>
+                <div class="package-price">13 Triệu</div>
+                <div class="package-desc">Web tĩnh đa trang — không backend, không CMS</div>
                 <ul>
                     <li>🎨 <span class="layout-badge">1 giao diện</span> thiết kế chuẩn thẩm mỹ</li>
-                    <li>📄 Landing page 1 trang dài (7–8 section)</li>
+                    <li>📄 <strong>Website đa trang — khoảng 5–7 trang</strong></li>
                     <li>🎬 Video Hero trang chủ (autoplay)</li>
-                    <li>📝 Form thu thập thông tin liên hệ</li>
+                    <li>📝 Form liên hệ — gửi thông tin về <strong>email</strong> (không lưu backend)</li>
                     <li>⚡ Nút liên hệ nhanh: Zalo / FB / Hotline / WhatsApp</li>
                     <li>📸 Gallery Before/After</li>
                     <li>👩‍⚕️ Giới thiệu đội ngũ bác sĩ</li>
                     <li>💬 Cảm nhận khách hàng + FAQ</li>
                     <li>📊 Facebook Pixel + Google Analytics (GA4)</li>
                     <li>🔒 SSL + SEO Onpage cơ bản</li>
+                    <li>🖥️ <strong>Web tĩnh — không backend, không CMS</strong> (cập nhật nội dung qua đội ngũ dev)</li>
                     <li>🛡️ Bảo trì miễn phí 3 tháng</li>
                 </ul>
                 <p style="font-size: 9pt; margin-top: 10px; color: var(--text-muted);">
                     <strong>Công nghệ:</strong> NextGen Web<br>
-                    <strong>Thời gian:</strong> 2 tuần
+                    <strong>Thời gian:</strong> 2–3 tuần
                 </p>
             </div>
 
             <!-- Package B -->
             <div class="package recommended">
                 <div class="package-name">💎 GÓI B<br>CHUYÊN NGHIỆP</div>
-                <div class="package-price">17 Triệu</div>
-                <div class="package-desc">Đa trang, song ngữ, animation cao cấp</div>
+                <div class="package-price">22 Triệu</div>
+                <div class="package-desc">Có backend + CMS, quản lý nội dung & data form</div>
                 <ul>
                     <li>✅ <strong>Tất cả tính năng Gói A</strong></li>
+                    <li>🖥️ <strong>Backend + CMS</strong>: tự quản lý Blog, Dịch vụ, Before/After</li>
+                    <li>📥 <strong>Lưu & quản lý data khách điền form</strong> (lead)</li>
                     <li>🎨 <span class="layout-badge">2–3 phương án</span> Homepage để chọn</li>
-                    <li>📄 Website đa trang (trang dịch vụ riêng)</li>
+                    <li>📄 <strong>Website đa trang — khoảng 8–12 trang</strong> (trang dịch vụ riêng)</li>
                     <li>✨ Hiệu ứng animation / parallax cao cấp</li>
                     <li>🌍 Song ngữ Việt – Anh</li>
                     <li>📸 Gallery Before/After + Filter theo dịch vụ</li>
@@ -692,49 +744,74 @@
                     <li>🛡️ Bảo trì miễn phí 6 tháng</li>
                 </ul>
                 <p style="font-size: 9pt; margin-top: 10px; color: var(--text-muted);">
-                    <strong>Công nghệ:</strong> NextGen Web + Animation<br>
-                    <strong>Thời gian:</strong> 3–4 tuần
+                    <strong>Công nghệ:</strong> NextGen Web + CMS + Animation<br>
+                    <strong>Thời gian:</strong> 4–5 tuần
                 </p>
             </div>
 
             <!-- Package C -->
             <div class="package">
-                <div class="package-name">👑 GÓI C<br>CAO CẤP</div>
-                <div class="package-price">23 Triệu</div>
-                <div class="package-desc">Luxury, thiết kế riêng + trang quản trị</div>
+                <div class="package-name">👑 GÓI C<br>CAO CẤP (GIỐNG AKINA)</div>
+                <div class="package-price">29 Triệu</div>
+                <div class="package-desc">Full CMS quản trị toàn bộ — chuẩn như Akina</div>
                 <ul>
                     <li>✅ <strong>Tất cả tính năng Gói B</strong></li>
+                    <li>🖥️ <strong>Backend + CMS ĐẦY ĐỦ</strong>: quản trị toàn bộ — dịch vụ, giá, bác sĩ, before/after, blog, banner, popup, menu</li>
+                    <li>📄 <strong>Website đa trang — khoảng 13–20 trang</strong></li>
                     <li>🎨 <span class="layout-badge">Thiết kế riêng</span> theo thương hiệu (custom)</li>
-                    <li>🖥️ <strong>Trang quản trị (CMS)</strong>: tự đăng bài, cập nhật dịch vụ, giá, ảnh, before/after</li>
-                    <li>🌍 Đa ngôn ngữ (Việt, Anh + 1: Hàn/Trung/Nhật)</li>
+                    <li>🌍 Đa ngôn ngữ (Việt, Anh + 2: Hàn/Trung/Nhật)</li>
                     <li>👨‍⚕️ Thương hiệu cá nhân bác sĩ (trang riêng)</li>
-                    <li>📰 Blog 5 bài + hệ thống chuyên mục</li>
-                    <li>🔗 Tích hợp CRM / đẩy lead đa kênh</li>
-                    <li>🧠 SEO nâng cao + Schema y tế</li>
-                    <li>🎓 2 buổi đào tạo quản trị website</li>
+                    <li>📰 Blog + hệ thống chuyên mục / tag</li>
+                    <li>📈 Dashboard thống kê Lead + báo cáo</li>
+                    <li>👥 Phân quyền quản trị (Admin / Nhân viên)</li>
+                    <li>🔗 Tích hợp CRM + tự động hóa (Email / Zalo ZNS)</li>
+                    <li>🤖 Chatbot tư vấn theo kịch bản 24/7 (không phí duy trì; bản AI là tùy chọn)</li>
+                    <li>🧠 SEO nâng cao + Schema y tế + Core Web Vitals</li>
+                    <li>💾 Backup tự động + bảo mật nâng cao</li>
+                    <li>🎓 2 buổi đào tạo + video hướng dẫn quản trị</li>
                     <li>🛡️ Bảo trì miễn phí 12 tháng</li>
                 </ul>
                 <p style="font-size: 9pt; margin-top: 10px; color: var(--text-muted);">
-                    <strong>Công nghệ:</strong> NextGen Web + Backend/CMS<br>
-                    <strong>Thời gian:</strong> 4–6 tuần
+                    <strong>Công nghệ:</strong> NextGen Web + Backend / Full CMS<br>
+                    <strong>Thời gian:</strong> 6–8 tuần
                 </p>
             </div>
         </div>
 
         <!-- Comparison Table -->
         <h2>📊 SO SÁNH CHI TIẾT</h2>
+        <p class="scroll-hint">↔ Vuốt ngang để xem đầy đủ bảng</p>
+        <div class="table-scroll">
         <table class="comparison">
             <tr>
                 <th>Tính năng</th>
-                <th class="center">Gói A (12M)</th>
-                <th class="center">Gói B (17M) ⭐</th>
-                <th class="center">Gói C (23M)</th>
+                <th class="center">Gói A (13M)</th>
+                <th class="center">Gói B (22M) ⭐</th>
+                <th class="center">Gói C (29M)</th>
             </tr>
             <tr>
                 <td><strong>Kiểu website</strong></td>
-                <td class="center">1 trang dài</td>
-                <td class="center">Đa trang</td>
+                <td class="center">Web tĩnh (đa trang)</td>
                 <td class="center">Đa trang + CMS</td>
+                <td class="center">Đa trang + Full CMS</td>
+            </tr>
+            <tr>
+                <td><strong>📄 Số trang (khoảng)</strong></td>
+                <td class="center">5–7 trang</td>
+                <td class="center">8–12 trang</td>
+                <td class="center">13–20 trang</td>
+            </tr>
+            <tr>
+                <td><strong>🖥️ Backend + Trang quản trị (CMS)</strong></td>
+                <td class="center no">❌</td>
+                <td class="center yes">✅ Cơ bản</td>
+                <td class="center yes">✅ Đầy đủ</td>
+            </tr>
+            <tr>
+                <td><strong>🗄️ Lưu & quản lý data form (Lead)</strong></td>
+                <td class="center no">❌ (gửi email)</td>
+                <td class="center yes">✅</td>
+                <td class="center yes">✅</td>
             </tr>
             <tr>
                 <td><strong>Phương án giao diện để chọn</strong></td>
@@ -782,7 +859,7 @@
                 <td><strong>🌍 Đa ngôn ngữ</strong></td>
                 <td class="center no">❌ (chỉ Việt)</td>
                 <td class="center">Việt – Anh</td>
-                <td class="center">3 ngôn ngữ</td>
+                <td class="center">3–4 ngôn ngữ</td>
             </tr>
             <tr>
                 <td><strong>⭐ Google Reviews</strong></td>
@@ -800,19 +877,37 @@
                 <td><strong>📊 Marketing (Pixel/GA4/GTM)</strong></td>
                 <td class="center">Pixel + GA4</td>
                 <td class="center yes">✅ Full</td>
-                <td class="center yes">✅ Full + CRM</td>
+                <td class="center yes">✅ Full</td>
             </tr>
             <tr>
-                <td><strong>🖥️ Trang quản trị (CMS)</strong></td>
+                <td><strong>📈 Dashboard thống kê Lead</strong></td>
                 <td class="center no">❌</td>
                 <td class="center no">❌</td>
                 <td class="center yes">✅</td>
             </tr>
             <tr>
+                <td><strong>👥 Phân quyền quản trị (Admin/NV)</strong></td>
+                <td class="center no">❌</td>
+                <td class="center no">❌</td>
+                <td class="center yes">✅</td>
+            </tr>
+            <tr>
+                <td><strong>🤖 Chatbot tư vấn tự động</strong></td>
+                <td class="center no">❌</td>
+                <td class="center no">❌</td>
+                <td class="center yes">✅ Kịch bản</td>
+            </tr>
+            <tr>
+                <td><strong>🔗 CRM + Tự động hóa (Email/Zalo ZNS)</strong></td>
+                <td class="center no">❌</td>
+                <td class="center">Google Sheet/Email</td>
+                <td class="center yes">✅ CRM đầy đủ</td>
+            </tr>
+            <tr>
                 <td><strong>🧠 SEO</strong></td>
                 <td class="center">Onpage cơ bản</td>
                 <td class="center">Nâng cao</td>
-                <td class="center">Nâng cao + Schema</td>
+                <td class="center">Nâng cao + Schema + CWV</td>
             </tr>
             <tr>
                 <td><strong>🎓 Đào tạo quản trị</strong></td>
@@ -828,23 +923,25 @@
             </tr>
             <tr>
                 <td><strong>⏱️ Thời gian triển khai</strong></td>
-                <td class="center">2 tuần</td>
-                <td class="center">3–4 tuần</td>
-                <td class="center">4–6 tuần</td>
+                <td class="center">2–3 tuần</td>
+                <td class="center">4–5 tuần</td>
+                <td class="center">6–8 tuần</td>
             </tr>
         </table>
+        </div>
 
         <!-- Recommendation -->
         <div class="highlight-box">
-            <strong>💡 Chúng tôi gợi ý: Gói B (17 triệu)</strong> phù hợp nhất cho phòng khám thẩm mỹ vì:
+            <strong>💡 Chúng tôi đề xuất: Gói B (22 triệu)</strong> — cân bằng tốt nhất giữa chi phí và tính năng.
+            Đã có đầy đủ <strong>backend + CMS</strong> để chị chủ động quản lý nội dung và lưu trữ data khách điền form:
             <ul style="margin-top: 10px; margin-left: 20px;">
-                <li>✅ <strong>2–3 phương án giao diện</strong> để lựa chọn — thương hiệu nổi bật, không giống ai</li>
-                <li>✅ <strong>Website đa trang</strong> với trang dịch vụ riêng — chuẩn phòng khám chuyên nghiệp</li>
-                <li>✅ <strong>Song ngữ Việt – Anh</strong> — phục vụ cả khách nước ngoài</li>
-                <li>✅ <strong>Full Marketing (Pixel + GA4 + GTM)</strong> — sẵn sàng chạy quảng cáo, đo lường lead</li>
-                <li>✅ <strong>Google Reviews + Before/After Filter</strong> — tăng độ tin cậy, chuyển đổi khách</li>
-                <li>✅ <strong>Blog + SEO nâng cao</strong> — kéo traffic tự nhiên lâu dài</li>
+                <li>✅ <strong>Backend + CMS</strong> — tự quản lý blog, dịch vụ, before/after; không phụ thuộc dev</li>
+                <li>✅ <strong>Lưu & quản lý Lead</strong> — data khách điền form được lưu & quản lý trong hệ thống</li>
+                <li>✅ <strong>Song ngữ Việt – Anh + Google Reviews</strong> — tăng độ tin cậy, phục vụ khách nước ngoài</li>
+                <li>✅ <strong>Full Marketing (Pixel + GA4 + GTM)</strong> — sẵn sàng chạy quảng cáo, đo lường hiệu quả</li>
+                <li>✅ <strong>Animation cao cấp + SEO nâng cao</strong> — giao diện đẹp, lên top Google</li>
             </ul>
+            <p style="margin-top: 12px; margin-bottom: 0;"><strong>Gói C (29 triệu)</strong> là bản cao cấp hơn — CMS đầy đủ giống Akina, thiết kế riêng, Dashboard thống kê, phân quyền, CRM tự động hóa, chatbot — phù hợp khi cần vận hành quy mô lớn & chuyên nghiệp hơn.</p>
         </div>
 
         <div class="page-break"></div>
@@ -921,16 +1018,16 @@
             <tr>
                 <td><strong>Đợt 1 (50%)</strong></td>
                 <td>Khi ký hợp đồng / bắt đầu</td>
-                <td>6 triệu</td>
-                <td>8.5 triệu</td>
-                <td>11.5 triệu</td>
+                <td>6.5 triệu</td>
+                <td>11 triệu</td>
+                <td>14.5 triệu</td>
             </tr>
             <tr>
                 <td><strong>Đợt 2 (50%)</strong></td>
                 <td>Khi nghiệm thu & bàn giao</td>
-                <td>6 triệu</td>
-                <td>8.5 triệu</td>
-                <td>11.5 triệu</td>
+                <td>6.5 triệu</td>
+                <td>11 triệu</td>
+                <td>14.5 triệu</td>
             </tr>
         </table>
         <p style="text-align: center; color: var(--text-muted);">Chuyển khoản ngân hàng / MoMo / ZaloPay</p>
@@ -943,6 +1040,21 @@
                     <th>Hạng mục</th>
                     <th class="center">Chi phí</th>
                     <th>Ghi chú</th>
+                </tr>
+                <tr>
+                    <td>Nâng cấp Backend + CMS cho Gói A</td>
+                    <td class="center">+9 triệu</td>
+                    <td>Tương đương lên Gói B (có backend + CMS)</td>
+                </tr>
+                <tr>
+                    <td>Chatbot AI (tư vấn ngôn ngữ tự nhiên)</td>
+                    <td class="center">Từ 6 triệu + phí API/tháng</td>
+                    <td>Gói mở rộng riêng — xem mục "🤖 Gói mở rộng: Chatbot AI"</td>
+                </tr>
+                <tr>
+                    <td>Nâng cấp Full CMS + tính năng cao cấp cho Gói A/B</td>
+                    <td class="center">Chênh lệch lên Gói C</td>
+                    <td>CMS đầy đủ, Dashboard, phân quyền, CRM, chatbot...</td>
                 </tr>
                 <tr>
                     <td>Tích hợp đặt lịch hẹn (nếu sau này cần)</td>
@@ -960,9 +1072,9 @@
                     <td>Tùy độ phức tạp</td>
                 </tr>
                 <tr>
-                    <td>Chatbot tư vấn tự động</td>
+                    <td>Chatbot tư vấn tự động (cho Gói A/B)</td>
                     <td class="center">+2–4 triệu</td>
-                    <td>Trả lời tự động 24/7</td>
+                    <td>Trả lời tự động 24/7 (Gói C đã bao gồm)</td>
                 </tr>
                 <tr>
                     <td>Gói viết nội dung + chụp ảnh dịch vụ</td>
@@ -970,6 +1082,76 @@
                     <td>Theo khối lượng thực tế</td>
                 </tr>
             </table>
+        </div>
+
+        <!-- AI Chatbot extension package -->
+        <h2>🤖 GÓI MỞ RỘNG: CHATBOT AI (TƯ VẤN NGÔN NGỮ TỰ NHIÊN)</h2>
+        <p>Khác với chatbot theo kịch bản (trả lời theo menu định sẵn, đã bao gồm trong Gói C), <strong>Chatbot AI</strong>
+            hiểu và trả lời <strong>ngôn ngữ tự nhiên như nhân viên thật</strong>. Do <strong>bắt buộc dùng API AI</strong>
+            (OpenAI / Google Gemini) nên có <strong>phí API duy trì hằng tháng</strong> — vì vậy em tách riêng thành
+            <strong>gói mở rộng tùy chọn</strong>, có thể gắn thêm vào bất kỳ gói A / B / C nào.</p>
+
+        <div class="new-feature-box">
+            <h4>💵 1. Chi phí phát triển &amp; tích hợp (thanh toán 1 lần)</h4>
+            <table style="font-size: 9.5pt;">
+                <tr>
+                    <th>Mức</th>
+                    <th class="center">Chi phí</th>
+                    <th>Bao gồm</th>
+                </tr>
+                <tr>
+                    <td><strong>AI Cơ bản</strong></td>
+                    <td class="center"><strong>6 triệu</strong></td>
+                    <td>Trả lời FAQ + tư vấn dịch vụ, 1 ngôn ngữ, huấn luyện theo dữ liệu phòng khám</td>
+                </tr>
+                <tr>
+                    <td><strong>AI Nâng cao</strong></td>
+                    <td class="center"><strong>10 triệu</strong></td>
+                    <td>Đa ngôn ngữ, hiểu ngữ cảnh, kết nối dữ liệu dịch vụ/giá, tự thu lead &amp; chuyển nhân viên khi cần</td>
+                </tr>
+            </table>
+            <p style="font-size: 9pt; margin-bottom:0;">💡 Phí này trả 1 lần cho DanaExperts (xây dựng, huấn luyện, tích hợp vào website).</p>
+        </div>
+
+        <div class="new-feature-box">
+            <h4>📡 2. Chi phí API AI hằng tháng (trả trực tiếp cho nhà cung cấp OpenAI / Google)</h4>
+            <table style="font-size: 9.5pt;">
+                <tr>
+                    <th>Lưu lượng (ước tính)</th>
+                    <th class="center">Model tiết kiệm<br>(GPT-4o-mini / Gemini Flash)</th>
+                    <th class="center">Model cao cấp<br>(GPT-4o / Gemini Pro)</th>
+                </tr>
+                <tr>
+                    <td>~1.000 tin nhắn / tháng</td>
+                    <td class="center">~50K – 150K</td>
+                    <td class="center">~300K – 500K</td>
+                </tr>
+                <tr>
+                    <td>~5.000 tin nhắn / tháng</td>
+                    <td class="center">~200K – 600K</td>
+                    <td class="center">~1 – 2 triệu</td>
+                </tr>
+                <tr>
+                    <td>~10.000+ tin nhắn / tháng</td>
+                    <td class="center">~500K – 1.2 triệu</td>
+                    <td class="center">~2 – 4 triệu</td>
+                </tr>
+            </table>
+            <p style="font-size: 9pt;">
+                ⚠️ <strong>Giá API do nhà cung cấp quy định</strong> (tính theo token/lượng tin nhắn) và <strong>có thể thay đổi</strong>;
+                số liệu trên là <strong>ước tính tham khảo</strong>, thực tế thường thấp hơn nếu tối ưu tốt.<br>
+                💡 Phòng khám dùng <strong>tài khoản API riêng</strong> và thanh toán trực tiếp cho nhà cung cấp; DanaExperts hỗ trợ cấu hình.<br>
+                💡 <strong>Không phát sinh phí API</strong> nếu chỉ dùng <strong>chatbot kịch bản</strong> (Gói C đã bao gồm) — chỉ chatbot AI mới cần API.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>💰 Ví dụ tổng chi phí Chatbot AI (mức phổ biến):</strong>
+            <ul style="margin-top: 10px; margin-left: 20px;">
+                <li>Phát triển AI Cơ bản: <strong>6 triệu</strong> (1 lần)</li>
+                <li>API model tiết kiệm, ~5.000 tin/tháng: <strong>~200K – 600K/tháng</strong> (trả cho OpenAI/Google)</li>
+                <li>👉 Tổng năm đầu ước tính: <strong>~6 triệu + ~2.4 – 7.2 triệu tiền API/năm</strong></li>
+            </ul>
         </div>
 
         <!-- All packages include -->
